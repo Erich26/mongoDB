@@ -5,27 +5,27 @@ let getPosts = (limit, skip, sortField, sortOrder, filterField, filterValue) => 
     const filterParams = {}
     filterParams[filterField] = filterValue
 
-    const outcome = db.posts.find(filterParams).limit(limit).skip(skip).sort(sortParams).toArray()
+    const outcome =actions.blogPosts.find(filterParams).limit(limit).skip(skip).sort(sortParams).toArray()
 
     return outcome;
 };
 
 let findPost = (blogKey, blogValue) => {
-    const singleBlog = db.posts.find(
+    const singleBlog = actions.blogPosts.find(
         { [blogKey]: blogValue }).toArray()
 
     return singleBlog;
 };
 
 let getPostsCollectionLength = () => {
-    let postQuantity = db.posts.find({}).toArray().length
+    let postQuantity = actions.blogPosts.find({}).toArray().length
 
     return postQuantity;
 }
 
 let makePost = (title, text, author, category) => {
 
-    let creatPost = db.posts.insertOne(
+    let creatPost = actions.blogPosts.insertOne(
         {
             createdAt: new ISODate(),
             lastModified: ISODate(),
@@ -39,7 +39,7 @@ let makePost = (title, text, author, category) => {
 }
 
 let updatePost = (findPost, title, text, author, category) => {
-    let updatedBlog = db.posts.update(
+    let updatedBlog = actions.blogPosts.update(
         { id: findPost },
         {
             $set: {
@@ -55,7 +55,7 @@ let updatePost = (findPost, title, text, author, category) => {
 }
 
 let deletePosts = (blogKey, blogValue) => {
-    const deletedBlog = db.posts.deleteOne(
+    const deletedBlog = actions.blogPosts.deleteOne(
         { [blogKey]: blogValue })
 
     return deletedBlog
